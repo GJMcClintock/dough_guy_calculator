@@ -212,7 +212,7 @@
             // Calculate ingredients
             const totalFlour = Math.round(scalingFactor * quantity * 605);
             const water = Math.round(totalFlour * 0.62);
-            const yeast = Math.round(totalFlour * 0.004);
+            const yeast = (totalFlour * 0.004).toFixed(1);
             const salt = Math.round(totalFlour * 0.025);
             const sugar = Math.round(totalFlour * 0.025);
             const oliveOil = Math.round(totalFlour * 0.033);
