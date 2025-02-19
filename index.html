@@ -9,27 +9,35 @@
             font-family: Arial, sans-serif;
             max-width: 800px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 15px;
             background-color: #f5f5f5;
         }
         .calculator {
             background-color: white;
-            padding: 20px;
+            padding: 15px;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         .input-group {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 20px;
+            gap: 15px;
+            margin-bottom: 15px;
         }
         .input-field {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+        }
+        .label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 5px;
         }
         label {
-            display: block;
-            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .value-display {
+            color: #333;
             font-weight: bold;
         }
         select {
@@ -39,16 +47,6 @@
             border-radius: 4px;
             box-sizing: border-box;
         }
-        .slider-container {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        .slider-value {
-            font-size: 1.2em;
-            font-weight: bold;
-            color: #333;
-        }
         input[type="range"] {
             width: 100%;
             margin: 8px 0;
@@ -56,10 +54,10 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            margin-top: 15px;
         }
         th, td {
-            padding: 12px;
+            padding: 8px;
             text-align: left;
             border: 1px solid #ddd;
         }
@@ -71,12 +69,13 @@
         }
         h1 {
             color: #333;
-            margin-bottom: 20px;
+            margin: 0 0 15px 0;
+            font-size: 1.5em;
         }
         .footer {
             text-align: center;
-            margin-top: 20px;
-            padding: 20px;
+            margin-top: 15px;
+            padding: 10px;
             color: #666;
         }
         .footer a {
@@ -87,6 +86,23 @@
         .footer a:hover {
             text-decoration: underline;
         }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .calculator {
+                padding: 10px;
+            }
+            .input-group {
+                gap: 10px;
+            }
+            .input-field {
+                margin-bottom: 10px;
+            }
+            h1 {
+                font-size: 1.3em;
+            }
+        }
     </style>
 </head>
 <body>
@@ -95,23 +111,25 @@
         
         <div class="input-group">
             <div class="input-field">
-                <label for="size">Pizza Size</label>
-                <div class="slider-container">
-                    <div class="slider-value"><span id="size-value">14</span> inches</div>
-                    <input type="range" id="size" min="8" max="20" value="14" step="0.5">
+                <div class="label-row">
+                    <label for="size">Pizza Size</label>
+                    <span class="value-display"><span id="size-value">14</span> inches</span>
                 </div>
+                <input type="range" id="size" min="8" max="20" value="14" step="0.5">
             </div>
             
             <div class="input-field">
-                <label for="quantity">Number of Pizzas</label>
-                <div class="slider-container">
-                    <div class="slider-value"><span id="quantity-value">1</span> pizza(s)</div>
-                    <input type="range" id="quantity" min="1" max="10" value="1" step="1">
+                <div class="label-row">
+                    <label for="quantity">Number of Pizzas</label>
+                    <span class="value-display"><span id="quantity-value">1</span> pizza(s)</span>
                 </div>
+                <input type="range" id="quantity" min="1" max="10" value="1" step="1">
             </div>
             
             <div class="input-field">
-                <label for="thickness">Thickness</label>
+                <div class="label-row">
+                    <label for="thickness">Thickness</label>
+                </div>
                 <select id="thickness">
                     <option value="thin">Thin</option>
                     <option value="regular" selected>Regular</option>
@@ -169,7 +187,7 @@
             thick: 2.75
         };
 
-        function updateSliderValue(sliderId, valueId, suffix = '') {
+        function updateSliderValue(sliderId, valueId) {
             const slider = document.getElementById(sliderId);
             const valueDisplay = document.getElementById(valueId);
             valueDisplay.textContent = slider.value;
