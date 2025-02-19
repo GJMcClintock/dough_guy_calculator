@@ -25,19 +25,33 @@
             margin-bottom: 20px;
         }
         .input-field {
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
         label {
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
         }
-        input, select {
+        select {
             width: 100%;
             padding: 8px;
             border: 1px solid #ddd;
             border-radius: 4px;
             box-sizing: border-box;
+        }
+        .slider-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .slider-value {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+        }
+        input[type="range"] {
+            width: 100%;
+            margin: 8px 0;
         }
         table {
             width: 100%;
@@ -81,13 +95,19 @@
         
         <div class="input-group">
             <div class="input-field">
-                <label for="size">Pizza Size (inches)</label>
-                <input type="number" id="size" value="14" min="1" step="any">
+                <label for="size">Pizza Size</label>
+                <div class="slider-container">
+                    <div class="slider-value"><span id="size-value">14</span> inches</div>
+                    <input type="range" id="size" min="8" max="20" value="14" step="0.5">
+                </div>
             </div>
             
             <div class="input-field">
                 <label for="quantity">Number of Pizzas</label>
-                <input type="number" id="quantity" value="2" min="1">
+                <div class="slider-container">
+                    <div class="slider-value"><span id="quantity-value">1</span> pizza(s)</div>
+                    <input type="range" id="quantity" min="1" max="10" value="1" step="1">
+                </div>
             </div>
             
             <div class="input-field">
@@ -149,14 +169,19 @@
             thick: 2.75
         };
 
+        function updateSliderValue(sliderId, valueId, suffix = '') {
+            const slider = document.getElementById(sliderId);
+            const valueDisplay = document.getElementById(valueId);
+            valueDisplay.textContent = slider.value;
+        }
+
         function calculateIngredients() {
             const size = parseFloat(document.getElementById('size').value);
             const quantity = parseInt(document.getElementById('quantity').value);
             const thickness = document.getElementById('thickness').value;
             
-            if (isNaN(size) || isNaN(quantity) || size <= 0 || quantity <= 0) {
-                return;
-            }
+            updateSliderValue('size', 'size-value');
+            updateSliderValue('quantity', 'quantity-value');
 
             const density = densityMap[thickness];
             
